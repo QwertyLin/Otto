@@ -24,6 +24,7 @@ import com.squareup.otto.Produce;
 import java.util.Random;
 
 import q.otto.R;
+import q.util.OttoHelper;
 
 import static android.view.View.OnClickListener;
 
@@ -43,12 +44,12 @@ public class LocationActivity extends FragmentActivity {
     findViewById(R.id.clear_location).setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         // Tell everyone to clear their location history.
-        BusProvider.getInstance().post(new LocationClearEvent());
+    	  OttoHelper.get().post(new LocationClearEvent());
 
         // Post new location event for the default location.
         lastLatitude = DEFAULT_LAT;
         lastLongitude = DEFAULT_LON;
-        BusProvider.getInstance().post(produceLocationEvent());
+        OttoHelper.get().post(produceLocationEvent());
       }
     });
 
@@ -56,7 +57,7 @@ public class LocationActivity extends FragmentActivity {
       @Override public void onClick(View v) {
         lastLatitude += (RANDOM.nextFloat() * OFFSET * 2) - OFFSET;
         lastLongitude += (RANDOM.nextFloat() * OFFSET * 2) - OFFSET;
-        BusProvider.getInstance().post(produceLocationEvent());
+        OttoHelper.get().post(produceLocationEvent());
       }
     });
   }
@@ -65,14 +66,14 @@ public class LocationActivity extends FragmentActivity {
     super.onResume();
 
     // Register ourselves so that we can provide the initial value.
-    BusProvider.getInstance().register(this);
+    OttoHelper.get().register(this);
   }
 
   @Override protected void onPause() {
     super.onPause();
 
     // Always unregister when an object no longer should be on the bus.
-    BusProvider.getInstance().unregister(this);
+    OttoHelper.get().unregister(this);
   }
 
   @Produce public LocationChangedEvent produceLocationEvent() {

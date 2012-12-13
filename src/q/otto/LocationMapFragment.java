@@ -30,6 +30,8 @@ import com.squareup.otto.Subscribe;
 
 import java.net.URL;
 
+import q.util.OttoHelper;
+
 import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
 
 /** Display a map centered on the last known location. */
@@ -42,12 +44,12 @@ public class LocationMapFragment extends Fragment {
 
   @Override public void onResume() {
     super.onResume();
-    BusProvider.getInstance().register(this);
+    OttoHelper.get().register(this);
   }
 
   @Override public void onPause() {
     super.onPause();
-    BusProvider.getInstance().unregister(this);
+    OttoHelper.get().unregister(this);
 
     // Stop existing download, if it exists.
     if (downloadTask != null) {
@@ -99,7 +101,7 @@ public class LocationMapFragment extends Fragment {
 
     @Override protected void onPostExecute(Drawable drawable) {
       if (!isCancelled() && drawable != null) {
-        BusProvider.getInstance().post(new ImageAvailableEvent(drawable));
+    	  OttoHelper.get().post(new ImageAvailableEvent(drawable));
       }
     }
   }

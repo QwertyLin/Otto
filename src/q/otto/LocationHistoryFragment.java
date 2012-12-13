@@ -25,6 +25,8 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import q.util.OttoHelper;
+
 /** Maintain a scrollable history of location events. */
 public class LocationHistoryFragment extends ListFragment {
   private final List<String> locationEvents = new ArrayList<String>();
@@ -32,12 +34,12 @@ public class LocationHistoryFragment extends ListFragment {
 
   @Override public void onResume() {
     super.onResume();
-    BusProvider.getInstance().register(this);
+    OttoHelper.get().register(this);
   }
 
   @Override public void onPause() {
     super.onPause();
-    BusProvider.getInstance().unregister(this);
+    OttoHelper.get().unregister(this);
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
