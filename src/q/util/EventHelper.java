@@ -2,7 +2,7 @@ package q.util;
 
 import com.squareup.otto.Bus;
 
-public final class OttoHelper {
+public final class EventHelper {
 
 	private static Bus BUS;
 	
@@ -13,5 +13,5 @@ public final class OttoHelper {
 		return BUS;
 	}
 	
-	private OttoHelper(){}
+	private EventHelper(){}
 }

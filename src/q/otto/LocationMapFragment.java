@@ -30,7 +30,7 @@ import com.squareup.otto.Subscribe;
 
 import java.net.URL;
 
-import q.util.OttoHelper;
+import q.util.EventHelper;
 
 import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
 
@@ -44,12 +44,12 @@ public class LocationMapFragment extends Fragment {
 
   @Override public void onResume() {
     super.onResume();
-    OttoHelper.get().register(this);
+    EventHelper.get().register(this);
   }
 
   @Override public void onPause() {
     super.onPause();
-    OttoHelper.get().unregister(this);
+    EventHelper.get().unregister(this);
 
     // Stop existing download, if it exists.
     if (downloadTask != null) {
@@ -101,7 +101,7 @@ public class LocationMapFragment extends Fragment {
 
     @Override protected void onPostExecute(Drawable drawable) {
       if (!isCancelled() && drawable != null) {
-    	  OttoHelper.get().post(new ImageAvailableEvent(drawable));
+    	  EventHelper.get().post(new ImageAvailableEvent(drawable));
       }
     }
   }
